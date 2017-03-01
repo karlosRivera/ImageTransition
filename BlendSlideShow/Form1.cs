@@ -47,25 +47,34 @@ namespace BlendSlideShow
             return _Path;
         }
 
+        int numberOfTicks;
+        int ticksBeforeBlendStarts = 100;
+
         private void BlendTick(object sender, EventArgs e)
         {
-            mBlend += mDir * 0.02F;
-            if (mBlend > 1)
+            if (numberOfTicks >= ticksBeforeBlendStarts)
             {
-                mBlend = 0.0F;
-                if ((count + 1) < pictures.Length)
+                mBlend += mDir * 0.02F;
+                if (mBlend > 1)
                 {
-                    blendPanel1.Image1 = pictures[count];
-                    blendPanel1.Image2 = pictures[++count];
+                    mBlend = 0.0F;
+                    if ((count + 1) < pictures.Length)
+                    {
+                        blendPanel1.Image1 = pictures[count];
+                        blendPanel1.Image2 = pictures[++count];
+                    }
+                    else
+                    {
+                        blendPanel1.Image1 = pictures[count];
+                        blendPanel1.Image2 = pictures[0];
+                        count = 0;
+                    }
+
+                    numberOfTicks = 0;
                 }
-                else
-                {
-                    blendPanel1.Image1 = pictures[count];
-                    blendPanel1.Image2 = pictures[0];
-                    count = 0;
-                }
+                blendPanel1.Blend = mBlend;
             }
-            blendPanel1.Blend = mBlend;
+            numberOfTicks++;
         }
     }
 }
