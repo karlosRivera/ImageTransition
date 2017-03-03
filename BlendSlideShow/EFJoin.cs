@@ -27,22 +27,16 @@ namespace BlendSlideShow
             using (var db = new LocalDbContext())
             {
 
-                data = (from n in db.MyDatas
-                        orderby n.AddDate
-                        where DbFunctions.TruncateTime(n.EDate) >= StartDate.Date
-                        && DbFunctions.TruncateTime(n.EDate) <= EndDate
-                        select n).ToList();
+                // it is working
+                var result = (from p in DateRange.GetDates(new DateTime(2017, 01, 01), new DateTime(2017, 01, 20))
+                              join n in db.MyDatas.Where(x => x.EDate != null) on p.Date equals n.EDate.Value.Date into g
+                              from x in g.DefaultIfEmpty()
+                              select new
+                              {
+                                  date = p,
+                                  amount = x == null ? 0 : x.EAmount
+                              }).ToList();
 
-                var result = from p in DateRange.GetDates(new DateTime(2017, 01, 01), new DateTime(2017, 01, 20))
-                             join n in db.MyDatas on p equals n.EDate into g
-                             from x in g.DefaultIfEmpty()
-                             select new
-                             {
-                                 date = p,
-                                 amount = x == null ? 0 : x.EAmount
-                             };
-
-                var xx = result.ToList();
             }
         }
 

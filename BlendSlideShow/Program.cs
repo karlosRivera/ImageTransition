@@ -16,7 +16,8 @@ namespace BlendSlideShow
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EFJoin());
+            //Application.Run(new EFJoin());
+            Application.Run(new SlideShow());
         }
     }
 }
