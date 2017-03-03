@@ -48,8 +48,9 @@ namespace BlendSlideShow
         }
 
         int numberOfTicks;
-        int ticksBeforeBlendStarts = 100;
+        int ticksBeforeBlendStarts = 200;
 
+        // timer interval 50 * 200 = 10,000 milisec means 10 sec
         private void BlendTick(object sender, EventArgs e)
         {
             if (numberOfTicks >= ticksBeforeBlendStarts)
